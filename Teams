@@ -4,5 +4,12 @@ Whenever diagnosing why a user is not able to login:
 3. If you dont see anything there maybe he is putting in wrong username (Ask the user to replicate it while sharing screen)
 
 
+Agar koi hierachy me upar bhi ho aur uske pass ek object ke read access nahi hai toh usko kisi bhi case me uske neeche vali hierarchy me bane hue record nahi dikhenge
+
+Sharing rules set up in Sirion for Opportunity are based on Global Region and owner based 
+
+ 
+
+
 
 
