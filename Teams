@@ -8,6 +8,147 @@ Agar koi hierachy me upar bhi ho aur uske pass ek object ke read access nahi hai
 
 Sharing rules set up in Sirion for Opportunity are based on Global Region and owner based 
 
+converted amount field on Opportunity 
+ 
+ 
+CASE(
+CurrencyIsoCode,
+"AED", Amount / 3.672420,
+"AUD", Amount / 1.587806,
+"CHF", Amount / 0.885740,
+"EUR", Amount / 0.914746,
+"GBP", Amount / 0.777182,
+"INR", Amount / 86.956522,
+"SAR", Amount / 3.750938,
+"SGD", Amount / 1.337256,
+"USD", Amount,
+Amount
+)
+
+
+
+select id,name,Owner.Name, BillingCountry,Sales_Region__c, Financial_Reporting_Region__c from Account where OwnerId = '005fw000004t4blAAA' OR OwnerId = '005IU00000AmqBbYAJ'
+
+
+Hi sam, our Financial Reporting Region and Sales Territory is being updated on the bases of an automation - Update Territory and Region on Account
+
+Scenario : We have field on account Comp Customer Account
+We have to display its value on Campaign Member:
+Campaign member pe lead aur contact tag hote hai 
+2. Lead pe ek field banaynge - 
+Comp Customer Account - 
+IF(
+INCLUDES( LeanData__Reporting_Matched_Account__r.Comp_Customer_Account__c , "Agiloft"),
+"Agiloft, ",
+""
+) &
+IF(
+INCLUDES(LeanData__Reporting_Matched_Account__r.Comp_Customer_Account__c, "Apptus-Conga"),
+"Apptus-Conga, ",
+""
+) &
+IF(
+INCLUDES(LeanData__Reporting_Matched_Account__r.Comp_Customer_Account__c, "Coupa"),
+"Coupa, ",
+""
+) &
+IF(
+INCLUDES(LeanData__Reporting_Matched_Account__r.Comp_Customer_Account__c, "Icertis"),
+"Icertis",
+""
+)
+3. Contact pe ek field banaynge Comp Customer Account:
+IF(
+INCLUDES( Account.Comp_Customer_Account__c , "Agiloft"),
+"Agiloft, ",
+""
+) &
+IF(
+INCLUDES(Account.Comp_Customer_Account__c, "Apptus-Conga"),
+"Apptus-Conga, ",
+""
+) &
+IF(
+INCLUDES(Account.Comp_Customer_Account__c, "Coupa"),
+"Coupa, ",
+""
+) &
+IF(
+INCLUDES(Account.Comp_Customer_Account__c, "Icertis"),
+"Icertis",
+""
+)
+
+4. Finally Campaign Member pe ek field banayge jo account se value fetch krega
+IF( ISBLANK( ContactId), Lead.Comp_Customer_Account__c, Contact.Comp_Customer_Account__c)
+
+
+
+
+Active validation rules on Opportunity query : 
+ 
+SELECT Id, ValidationName, Active, Description, EntityDefinition.DeveloperName, 
+ErrorDisplayField, ErrorMessage, CreatedDate, LastModifiedDate 
+FROM ValidationRule 
+WHERE Active = true AND EntityDefinition.DeveloperName = 'Opportunity'
+
+
+
+
+Validations and Flows to stop for Opportunity Stage Change:
+ 
+Flow Name - Show error on Opp Stage if files not uploaded
+ 
+Flow Name - Closed won Required fields
+ 
+Flow Name - Closed nurture process
+ 
+Flow Name - Close nature required fields
+
+
+
+
+SELECT id,AccountId, account.AnnualRevenue,ICP_Profile__c,account.ICP_Profile__c,CurrencyIsoCode,account.CurrencyIsoCode from Opportunity where id IN('006fw000002GoHSAA0', '006fw000009NXDLAA4','006fw0000050uaPAAQ','006fw000003fbzZAAQ')
+
+
+
+While configuring dashboard, if data coming incorrect, login from user and check if data actually exists or no because sometimes the report is wrong and they are not the owner, in my case in a quota dashboard data was not coming correctly so check by logging in as user if they are not the owner, they were the sales user and report was running with the filter:
+Show Me:
+My Quotas
+but the owner was abrar ali
+
+
+Whenever testing dashboard or Report, always login as user and check records opening their reports for better clarity
+
+
+
+
+
+
+
+
+IF(
+
+  Account.AnnualRevenue / CURRENCYRATE(TEXT(Account.CurrencyIsoCode)) >= 500000000,
+
+  'Enterprise',
+
+  IF(
+
+    Account.AnnualRevenue / CURRENCYRATE(TEXT(Account.CurrencyIsoCode)) < 500000000,
+
+    'Commercial',
+
+    ''
+
+  )
+
+)
+ 
+
+
+
+
  
 
 
