@@ -1,1 +1,8 @@
+Whenever diagnosing why a user is not able to login:
+1. Check if user is active or not
+2.  you can go to users -> Login History -> Check the cause 
+3. If you dont see anything there maybe he is putting in wrong username (Ask the user to replicate it while sharing screen)
+
+
+
 
